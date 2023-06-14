@@ -25,6 +25,9 @@ import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.verifyZeroInteractions;
 
 @ExtendWith(MockitoExtension.class)
 class OwnerControllerTest {
@@ -97,7 +100,8 @@ class OwnerControllerTest {
 
         //in order
         inOrder.verify(ownerService).findAllByLastNameLike(anyString());
-        inOrder.verify(model).addAttribute(anyString(), anyList());
+        inOrder.verify(model, times(1)).addAttribute(anyString(), anyList());
+        verifyNoMoreInteractions(model);
     }
 
     @Test
@@ -108,9 +112,12 @@ class OwnerControllerTest {
         //when
         String viewName = ownerController.processFindForm(owner, bindingResult, null);
 
+        verifyNoMoreInteractions(ownerService);
+
         //then
         assertThat("%DontFindMe%").isEqualToIgnoringCase(stringArgumentCaptor.getValue());
         assertThat("owners/findOwners").isEqualToIgnoringCase(viewName);
+        verifyZeroInteractions(model);
     }
 
 //    @Test

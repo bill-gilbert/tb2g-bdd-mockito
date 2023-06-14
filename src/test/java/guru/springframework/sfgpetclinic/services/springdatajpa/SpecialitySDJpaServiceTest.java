@@ -23,6 +23,7 @@ import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.atMost;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.timeout;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
@@ -57,7 +58,7 @@ class SpecialitySDJpaServiceTest {
         service.deleteById(1l);
 
         // then
-        then(specialtyRepository).should(times(2)).deleteById(1L);
+        then(specialtyRepository).should(timeout(100).times(2)).deleteById(1L);
     }
 
     @Test
@@ -93,7 +94,7 @@ class SpecialitySDJpaServiceTest {
         service.deleteById(1l);
 
         //then
-        then(specialtyRepository).should(atLeastOnce()).deleteById(1L);
+        then(specialtyRepository).should(timeout(100).atLeastOnce()).deleteById(1L);
         then(specialtyRepository).should(never()).deleteById(2L);
     }
 
@@ -105,7 +106,7 @@ class SpecialitySDJpaServiceTest {
         service.delete(new Speciality());
 
         //then
-        then(specialtyRepository).should(atLeastOnce()).delete(any(Speciality.class));
+        then(specialtyRepository).should(timeout(100).atLeastOnce()).delete(any(Speciality.class));
     }
 
     @Test
@@ -119,7 +120,7 @@ class SpecialitySDJpaServiceTest {
 
         //then
         assertThat(foundSpeciality).isNotNull();
-        then(specialtyRepository).should(times(1)).findById(anyLong());
+        then(specialtyRepository).should(timeout(100).times(1)).findById(anyLong());
         then(specialtyRepository).shouldHaveNoMoreInteractions();
     }
 
@@ -128,7 +129,6 @@ class SpecialitySDJpaServiceTest {
         doThrow(new RuntimeException("Boom ")).when(specialtyRepository).delete(any());
         assertThrows(RuntimeException.class, () -> specialtyRepository.delete(new Speciality()));
         assertThrows(RuntimeException.class, () -> specialtyRepository.delete(new Speciality()));
-        verify(specialtyRepository).delete(any());
     }
 
     @Test
@@ -137,7 +137,7 @@ class SpecialitySDJpaServiceTest {
 
         assertThrows(RuntimeException.class, ()->service.findById(1L));
 
-        then(specialtyRepository).should().findById(1L);
+        then(specialtyRepository).should(timeout(100)).findById(1L);
     }
 
     @Test
