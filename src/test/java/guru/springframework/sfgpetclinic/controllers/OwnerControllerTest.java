@@ -19,12 +19,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.verifyZeroInteractions;
@@ -178,7 +176,7 @@ class OwnerControllerTest {
     @Test
     void processFindFormWildcardString() {
         //given
-        Owner owner = new Owner(1l, "Joe", "Buck");
+        Owner owner = new Owner(1L, "Joe", "Buck");
         List<Owner> ownerList = new ArrayList<>();
         final ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
         given(ownerService.findAllByLastNameLike(captor.capture())).willReturn(ownerList);
