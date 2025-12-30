@@ -52,8 +52,8 @@ class SpecialitySDJpaServiceTest {
         //given  - non
 
         // when
-        service.deleteById(1l);
-        service.deleteById(1l);
+        service.deleteById(1L);
+        service.deleteById(1L);
 
         // then
         then(specialtyRepository).should(timeout(100).times(2)).deleteById(1L);
@@ -64,8 +64,8 @@ class SpecialitySDJpaServiceTest {
         //given  - non
 
         // when
-        service.deleteById(1l);
-        service.deleteById(1l);
+        service.deleteById(1L);
+        service.deleteById(1L);
 
         //then
         then(specialtyRepository).should(atLeastOnce()).deleteById(1L);
@@ -76,8 +76,8 @@ class SpecialitySDJpaServiceTest {
         //given  - non
 
         // when
-        service.deleteById(1l);
-        service.deleteById(1l);
+        service.deleteById(1L);
+        service.deleteById(1L);
 
         //then
         then(specialtyRepository).should(atMost(2)).deleteById(1L);
@@ -88,8 +88,8 @@ class SpecialitySDJpaServiceTest {
         //given  - non
 
         // when
-        service.deleteById(1l);
-        service.deleteById(1l);
+        service.deleteById(1L);
+        service.deleteById(1L);
 
         //then
         then(specialtyRepository).should(timeout(100).atLeastOnce()).deleteById(1L);
