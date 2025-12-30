@@ -24,6 +24,7 @@ import static org.mockito.Mockito.atMost;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.timeout;
+import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
 class SpecialitySDJpaServiceTest {
@@ -120,6 +121,15 @@ class SpecialitySDJpaServiceTest {
         assertThat(foundSpeciality).isNotNull();
         then(specialtyRepository).should(timeout(100).times(1)).findById(anyLong());
         then(specialtyRepository).shouldHaveNoMoreInteractions();
+    }
+
+    @Test
+    void findByIdBddTest() {
+        Speciality speciality = new Speciality();
+        given(specialtyRepository.findById(1L)).willReturn(Optional.of(speciality));
+        Speciality foundSpeciality = service.findById(1L);
+        assertThat(foundSpeciality).isNotNull();
+        verify(specialtyRepository).findById(anyLong());
     }
 
     @Test
